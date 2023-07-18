@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/blocs/contests/contests_bloc.dart';
+import 'package:todo/blocs/contests_filter/contests_filter_bloc.dart';
 import 'package:todo/models/contest.dart';
 import 'package:todo/screens/home.dart';
 
@@ -52,7 +53,12 @@ class MainApp extends StatelessWidget {
                   ),
                 ]),
               ),
-          )
+          ),
+          BlocProvider(
+            create: (context) => ContestsFilterBloc(
+              contestsBloc: BlocProvider.of<ContestsBloc>(context),
+            ),
+          ),
         ],
         child: const MaterialApp(
           debugShowCheckedModeBanner: false,

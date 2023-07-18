@@ -1,28 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/blocs/contests/contests_bloc.dart';
+import 'package:todo/blocs/contests_filter/contests_filter_bloc.dart';
 import 'package:todo/models/contest.dart';
+import 'package:todo/models/contest_filter.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ContestsBloc, ContestsState>(
+    return BlocBuilder<ContestsFilterBloc, ContestsFilterState>(
       builder: (context, state) {
-        if (state is ContestsLoading) {
+        if (state is ContestsFilterLoading) {
           return const CircularProgressIndicator();
         }
 
-        if (state is ContestsLoaded) {
+        if (state is ContestsFilterLoaded) {
           return Scaffold(
-            body: ListView.builder(
-              shrinkWrap: true,
-              itemCount: state.contests.length,
-              padding: const EdgeInsets.all(20),
-              itemBuilder: (context, index) {
-                return ContestCard(contest: state.contests[index]);
-              },
+            body: Column(
+              children: [
+                Wrap(
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        final newFilter = ContestFilter(
+                          savedOnly: !state.filter.savedOnly,
+                        );
+
+                        context.read<ContestsFilterBloc>().add(
+                              UpdateContestsFilter(
+                                filter: newFilter,
+                              ),
+                            );
+                      },
+                      child: Text(
+                        'Filtrar Guardados',
+                        style: TextStyle(
+                          color: !state.filter.savedOnly
+                              ? Theme.of(context).disabledColor
+                              : Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: state.filteredContests.length,
+                  padding: const EdgeInsets.all(20),
+                  itemBuilder: (context, index) {
+                    return ContestCard(contest: state.filteredContests[index]);
+                  },
+                ),
+              ],
             ),
           );
         }
