@@ -8,7 +8,8 @@ class Contest extends Equatable {
   final String topPrize;
   final String link;
   final bool viaEmail;
-  final bool isFavorite;
+  final bool viaPostalMail;
+  final bool isSaved;
 
   Contest({
     required this.id,
@@ -18,7 +19,8 @@ class Contest extends Equatable {
     required this.topPrize,
     required this.link,
     required this.viaEmail,
-    this.isFavorite = false,
+    this.viaPostalMail = false,
+    this.isSaved = false,
   });
 
   Contest copyWith({
@@ -29,7 +31,8 @@ class Contest extends Equatable {
     String? topPrize,
     String? link,
     bool? viaEmail,
-    bool? isFavorite,
+    bool? viaPostalMail,
+    bool? isSaved,
   }) {
     return Contest(
       id: id ?? this.id,
@@ -39,7 +42,8 @@ class Contest extends Equatable {
       topPrize: topPrize ?? this.topPrize,
       link: link ?? this.link,
       viaEmail: viaEmail ?? this.viaEmail,
-      isFavorite: isFavorite ?? this.isFavorite,
+      viaPostalMail: viaPostalMail ?? this.viaPostalMail,
+      isSaved: isSaved ?? this.isSaved,
     );
   }
 
@@ -51,6 +55,6 @@ class Contest extends Equatable {
         genres,
         topPrize,
         viaEmail,
-        isFavorite,
+        isSaved,
       ];
 }

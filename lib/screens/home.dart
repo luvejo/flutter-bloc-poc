@@ -66,15 +66,14 @@ class ContestCard extends StatelessWidget {
             onPressed: () {
               context.read<ContestsBloc>().add(
                     UpdateContest(
-                      contest:
-                          contest.copyWith(isFavorite: !contest.isFavorite),
+                      contest: contest.copyWith(isSaved: !contest.isSaved),
                     ),
                   );
             },
             child: Text(
-              contest.isFavorite ? 'Guardado' : 'Guardar',
+              contest.isSaved ? 'Guardado' : 'Guardar',
               style: TextStyle(
-                color: contest.isFavorite
+                color: contest.isSaved
                     ? Theme.of(context).disabledColor
                     : Theme.of(context).primaryColor,
               ),
